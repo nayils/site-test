@@ -1,24 +1,49 @@
-<!doctype html>
-<html lang="ru">
+<?php
+session_start();
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Дз</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-</head>
+$title = "Главная";
+require_once('services/products.php');
+require_once('templates/header.php');
+?>
 
-<body>
-    Hello World
-    Привет мир!
-    Hello!
-    Привет!
+<h1 class="mb-4">Товары</h1>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-</body>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Поиск товаров...">
+            <button class="btn btn-outline-success" type="submit">Найти</button>
+        </form>
+    </div>
+</div>
 
-</html>
+<div class="row">
+    <?php for ($i = 1; $i <= 6; $i++): ?>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Товар <?php echo $i; ?></h5>
+                    <p class="card-text">Описание товара <?php echo $i; ?>. Краткое описание характеристик и преимуществ.</p>
+                    <p class="text-muted">Цена: <?php echo rand(100, 1000); ?> руб.</p>
+                    <a href="#" class="btn btn-primary">В корзину</a>
+                </div>
+            </div>
+        </div>
+    <?php endfor; ?>
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Назад</a>
+        </li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Вперед</a>
+        </li>
+    </ul>
+</nav>
+
+<?php require_once('templates/footer.php') ?>
