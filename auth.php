@@ -1,8 +1,11 @@
 <?php
 $title = "Авторизация";
 
-require_once('services/commons.php');
-require_once('services/auth.php');
+require_once('utils/paths.php');
+
+require_once(getRootPath('services/commons.php'));
+require_once(getRootPath('services/auth.php'));
+require_once(getRootPath('templates/header.php'));
 
 if (isAuth()) {
   redirect('/admin/products');
@@ -19,8 +22,6 @@ if (array_key_exists('email', $_POST) && array_key_exists('password', $_POST)) {
     $error = 'Ошибка входа!';
   }
 }
-
-require_once('templates/header.php');
 ?>
 
 <?php
@@ -51,4 +52,4 @@ if ($error) {
   </div>
 </div>
 
-<?php require_once('templates/footer.php') ?>
+<?php require_once(getRootPath('templates/footer.php')) ?>

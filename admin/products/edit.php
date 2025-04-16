@@ -1,6 +1,11 @@
 <?php
-$title = "Админка - Редактирование товара";
-require_once('../../templates/header.php');
+require_once(dirname(__DIR__, 2) . '/utils/paths.php');
+require_once(getRootPath('templates/header.php'));
+require_once(getRootPath('services/auth.php'));
+
+if (!isAuth()) {
+  redirect('/');
+}
 
 // Предполагаем, что ID товара передается через GET параметр
 $product_id = $_GET['id'] ?? 0;
@@ -43,4 +48,4 @@ $product_id = $_GET['id'] ?? 0;
   <a href="index.php" class="btn btn-secondary">Отмена</a>
 </form>
 
-<?php require_once('../../templates/footer.php'); ?>
+<?php require_once(getRootPath('templates/footer.php')); ?>

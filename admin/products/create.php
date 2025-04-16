@@ -1,6 +1,13 @@
 <?php
+require_once(dirname(__DIR__, 2) . '/utils/paths.php');
+require_once(getRootPath('templates/header.php'));
+require_once(getRootPath('services/auth.php'));
+
+if (!isAuth()) {
+  redirect('/');
+}
+
 $title = "Админка - Создание товара";
-require_once('../../templates/header.php');
 ?>
 
 <h1 class="mb-4">Создание товара</h1>
@@ -40,6 +47,4 @@ require_once('../../templates/header.php');
   <a href="index.php" class="btn btn-secondary">Отмена</a>
 </form>
 
-<?php
-require_once('../../templates/footer.php');
-?>
+<?php require_once(getRootPath('templates/footer.php')); ?>

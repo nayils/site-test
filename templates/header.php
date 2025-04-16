@@ -1,7 +1,6 @@
-<?
-
-// require_once('../../services/auth.php');
-
+<?php
+require_once(dirname(__DIR__) . '/utils/paths.php');
+require_once(getRootPath('services/auth.php'));
 ?>
 
 <!doctype html>
@@ -20,14 +19,14 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">Магазин</a>
+            <a class="navbar-brand" href="/">Магазин</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">Главная</a>
+                        <a class="nav-link" href="/">Главная</a>
                     </li>
                     <?php if (isset($is_admin) && $is_admin): ?>
                         <li class="nav-item dropdown">
@@ -48,10 +47,10 @@
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="auth.php">Войти</a>
+                            <a class="nav-link" href="/auth.php">Войти</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="register.php">Регистрация</a>
+                            <a class="nav-link" href="/register.php">Регистрация</a>
                         </li>
                     <?php endif; ?>
                 </ul>

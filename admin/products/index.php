@@ -1,14 +1,21 @@
 <?php
+require_once(dirname(__DIR__, 2) . '/utils/paths.php');
+require_once(getRootPath('templates/header.php'));
+require_once(getRootPath('services/auth.php'));
+
+if (!isAuth()) {
+  redirect('/');
+}
+
 $title = "Админка - Товары";
-require_once('../../templates/header.php');
 ?>
 
 <h1 class="mb-4">Управление товарами</h1>
 
 <div class="d-flex justify-content-between mb-4">
   <div>
-    <a href="create.php" class="btn btn-success">Добавить товар</a>
-    <a href="categories.php" class="btn btn-success">Список категорий</a>
+    <a href="/admin/products/create.php" class="btn btn-success">Добавить товар</a>
+    <a href="/admin/categories" class="btn btn-success">Список категорий</a>
   </div>
 
   <form class="d-flex">
@@ -37,7 +44,7 @@ require_once('../../templates/header.php');
         <td><?php echo rand(100, 1000); ?> руб.</td>
         <td><?php echo rand(0, 50); ?></td>
         <td>
-          <a href="edit.php?id=<?php echo $i; ?>" class="btn btn-sm btn-primary">Редактировать</a>
+          <a href="/admin/products/edit.php?id=<?php echo $i; ?>" class="btn btn-sm btn-primary">Редактировать</a>
           <button class="btn btn-sm btn-danger">Удалить</button>
         </td>
       </tr>
@@ -59,4 +66,4 @@ require_once('../../templates/header.php');
   </ul>
 </nav>
 
-<?php require_once('../../templates/footer.php');  ?>
+<?php require_once(getRootPath('templates/footer.php')); ?>
