@@ -2,12 +2,19 @@
 require_once(dirname(__DIR__, 2) . '/utils/paths.php');
 require_once(getRootPath('templates/header.php'));
 require_once(getRootPath('services/auth.php'));
+require_once(getRootPath('services/products.php'));
 
 if (!isAuth()) {
   redirect('/');
 }
 
+$s = isset($_GET['s']) ? htmlspecialchars($_GET['s']) : null;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$count = 6;
+
 $title = "Админка - Товары";
+
+$products = getProducts($s, $page, $count);
 ?>
 
 <h1 class="mb-4">Управление товарами</h1>
@@ -15,11 +22,10 @@ $title = "Админка - Товары";
 <div class="d-flex justify-content-between mb-4">
   <div>
     <a href="/admin/products/create.php" class="btn btn-success">Добавить товар</a>
-    <a href="/admin/categories" class="btn btn-success">Список категорий</a>
   </div>
 
-  <form class="d-flex">
-    <input class="form-control me-2" type="search" placeholder="Поиск товаров...">
+  <form action="/admin/products" method="GET" class="d-flex">
+    <input class="form-control me-2" type="search" placeholder="Поиск товаров..." name="s" value="<?= $s ?>">
     <button class="btn btn-outline-success" type="submit">Найти</button>
   </form>
 </div>
@@ -36,34 +42,34 @@ $title = "Админка - Товары";
     </tr>
   </thead>
   <tbody>
-    <?php for ($i = 1; $i <= 10; $i++): ?>
+    <?php foreach ($products['items'] as $product): ?>
       <tr>
-        <td><?php echo $i; ?></td>
-        <td>Товар <?php echo $i; ?></td>
-        <td>Категория <?php echo rand(1, 3); ?></td>
-        <td><?php echo rand(100, 1000); ?> руб.</td>
-        <td><?php echo rand(0, 50); ?></td>
+        <td><?php echo $product['id']; ?></td>
+        <td><?php echo $product['name']; ?></td>
+        <td><?php echo $product['category_name']; ?></td>
+        <td><?php echo $product['price']; ?> руб.</td>
+        <td><?php echo $product['quantity']; ?></td>
         <td>
-          <a href="/admin/products/edit.php?id=<?php echo $i; ?>" class="btn btn-sm btn-primary">Редактировать</a>
-          <button class="btn btn-sm btn-danger">Удалить</button>
+          <a href="/admin/products/edit.php?id=<?php echo $product['id']; ?>" class="btn btn-sm btn-primary">Редактировать</a>
+          <a href="/admin/products/remove.php?id=<?php echo $product['id']; ?>" class="btn btn-sm btn-danger">Удалить</a>
         </td>
       </tr>
-    <?php endfor; ?>
+    <?php endforeach; ?>
   </tbody>
 </table>
 
 <nav aria-label="Page navigation">
   <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Назад</a>
-    </li>
-    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Вперед</a>
-    </li>
+    <?php
+    $totalPages = ceil($products['total_count'] / $count);
+    for ($i = 1; $i <= $totalPages; $i++):
+    ?>
+      <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+        <a class="page-link" href="/admin/products/?page=<?= $i ?>&count=<?= $count ?>&s=<?= $s ?>"><?= $i ?></a>
+      </li>
+    <?php endfor; ?>
   </ul>
 </nav>
+
 
 <?php require_once(getRootPath('templates/footer.php')); ?>
